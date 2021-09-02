@@ -7,8 +7,46 @@
   <script src="/socket.io/socket.io.js"></script>
 
   <script>
+    // Корневое пространство имен «/» является пространством имен по умолчанию, к которому присоединяются клиенты, если клиентское пространство не указывает пространство имен при подключении к серверу. Все подключения к серверу с использованием клиентской стороны объекта сокета выполняются в пространстве имен по умолчанию.
     const socket = io();
-    socket.on('message', function(data){document.write(data)});
+
+    // 1. Получаем сообщение с сервера и отображаем его на клиенте
+    //  socket.on('message', function(data){document.write(data)});
+
+    //2. Чтобы обработать это пользовательское событие на клиенте ('testerEvent'), нам нужен слушатель, который прослушивает событие testerEvent.
+    //  socket.on('testerEvent', function (data) {
+    //    document.write(data.description);
+    //  });
+
+    //3. Мы также можем отправлять события от клиента. Чтобы отправить событие от вашего клиента, используйте функцию emit объекта сокета.
+    //  socket.emit('clientEvent', 'Sent an event from the client!');
+
+    //4. На стороне клиента нам просто нужно обработать событие широковещания. Это должно отправить событие всем.
+    //  socket.on('broadcast', function (data) {
+    //    document.body.innerHTML = '';
+    //    document.write(data.description);
+    //  });
+
+    //5. Теперь новый клиент получает приветственное сообщение, а другие получают количество клиентов, которые в данный момент подключены к серверу.
+    //  socket.on('newclientconnect', function (data) {
+    //    document.body.innerHTML = '';
+    //    document.write(data.description);
+    //  });
+
+    //6. Теперь, чтобы подключить клиента к этому пространству имен, вам необходимо предоставить пространство имен в качестве аргумента для вызова конструктора io, чтобы создать соединение и объект сокета на стороне клиента. Каждый раз, когда кто-то подключается к этому пространству имен, он получает событие 'hi' - 'Hello everyone!.
+    //  const socket1 = io('/my-namespace');
+    //  socket1.on('hi', function (data) {
+    //    document.body.innerHTML = '';
+    //    document.write(data);
+    //  });
+
+    //7. Просто обработайте это событие 'connectToRoom' на клиенте.
+    // Теперь, если вы подключите три клиента, первые два получат следующее сообщение — You are in room no. 1
+    // Третий клиент получит следующее сообщение — You are in room no. 2
+    socket.on('connectToRoom', function (data) {
+      document.body.innerHTML = '';
+      document.write(data);
+    });
   </script>
   <body>
     Hello world
