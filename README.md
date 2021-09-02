@@ -1,1 +1,1 @@
-'npm run start:server' start server
+`npm run start:server` start server
